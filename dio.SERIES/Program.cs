@@ -8,15 +8,15 @@ namespace dio.SERIES
     {
         static FilmeRepositorio filmeRepositorio = new FilmeRepositorio();
         static SerieRepositorio repositorio = new SerieRepositorio();
+
         static void Main(string[] args)
         {
             int i = 0;
 
-            string OpcaoUsuario = Apresentacao();
+            string OpcaoUsuario = OpcoesDoUsuario.Apresentacao();
 
             while (OpcaoUsuario.ToUpper() != "X")
             {
-
                 if (OpcaoUsuario == "1")
                 {
                     OpcaoSerie();
@@ -27,7 +27,6 @@ namespace dio.SERIES
                 }
                 else
                 {
-
                     WriteLine("Opcção Invalida");
                 }
                 i++;
@@ -36,33 +35,17 @@ namespace dio.SERIES
                     Clear();
                     i = 0;
                 }
-
-                OpcaoUsuario = Apresentacao();
+                OpcaoUsuario = OpcoesDoUsuario.Apresentacao();
             }
             WriteLine("Obrigado por utilizar os serviços");
             ReadLine();
         }
-
-        private static string Apresentacao()
-        {
-            WriteLine("-----------------------------------------");
-            WriteLine("A  S U A  L O C A D O R A  D I G I T A L ");
-            WriteLine("O que deseja cadastrar?");
-            WriteLine("1- Series");
-            WriteLine("2- Filmes");
-            WriteLine("x- Sair");
-            WriteLine("-----------------------------------------");
-            string OpcaoUsuario = ReadLine().ToUpper();
-            return OpcaoUsuario;
-        }
-
         private static void OpcaoSerie()
         {
-            string opcaoUsuario = ObterOpcaoUsuario();
+            string opcaoUsuario = OpcoesDoUsuario.ObterOpcaoUsuarioSerie();
 
             while (opcaoUsuario.ToUpper() != "X")
             {
-
                 switch (opcaoUsuario)
                 {
                     case "1":
@@ -86,17 +69,13 @@ namespace dio.SERIES
 
                     default:
                         throw new ArgumentOutOfRangeException();
-
                 }
-
-                opcaoUsuario = ObterOpcaoUsuario();
+                opcaoUsuario = OpcoesDoUsuario.ObterOpcaoUsuarioSerie();
             }
-
 
             static void ListarSeries()
             {
                 WriteLine("Listar séries");
-
                 var lista = repositorio.Lista();//a variavel 'lista' recebera o conteudo da varavel repositorio do metodo Lista 
 
                 if (lista.Count == 0)//se o tamanho da lista for = a zero
@@ -131,11 +110,15 @@ namespace dio.SERIES
                 WriteLine("Digite a descrição da série: ");
                 string entradaDescricao = ReadLine();
 
+                WriteLine("Digite a duração da série: ");
+                float entradaDuracao = float.Parse(ReadLine());
+
                 Serie novaSerie = new Serie(id: repositorio.ProximoId(),//esta condição ira criar um id para cada criação nova
                               genero: (Genero)entradaGenero,//insere o conteudo capturado no parametro.*em especial o (Genero) pq ele esta apontando o unum
                               titulo: entradaTitulo,
                               ano: entradaAno,
-                              descricao: entradaDescricao);
+                              descricao: entradaDescricao,
+                              duracao: entradaDuracao);
                 repositorio.Insere(novaSerie);//insere os dados coletados no repositorio                                      
             }
             static async void AtualizarSeries()
@@ -159,11 +142,15 @@ namespace dio.SERIES
                 WriteLine("Digite a descrição da série: ");
                 string entradaDescricao = ReadLine();
 
+                WriteLine("Digite a duração da série: ");
+                float entradaDuracao = float.Parse(ReadLine());
+
                 Serie atualizSerie = new Serie(id: indiceSerie,//pegamos o propio id que o usuario digitou
                                       genero: (Genero)entradaGenero,
                                       titulo: entradaTitulo,
                                       ano: entradaAno,
-                                      descricao: entradaDescricao);
+                                      descricao: entradaDescricao,
+                                      duracao: entradaDuracao);
 
                 repositorio.Atualiza(indiceSerie, atualizSerie);//sobrescreve                                           
             }
@@ -182,33 +169,11 @@ namespace dio.SERIES
                 var serie = repositorio.RetornaPortaId(indiceSerie);//variavel do repositorio>metodo>valor
                 WriteLine(serie);//retornará o id inserido e ira consolidar com as infomações do metodo 'ToString()'
             }
-
-
-            static string ObterOpcaoUsuario()
-            {
-                WriteLine();
-                WriteLine("JR Series a seu dispo!!!");
-                WriteLine("Informe a opção desejada");
-
-                WriteLine("1- Listar séries");
-                WriteLine("2- Inserir nova série");
-                WriteLine("3- Atualizar séries");
-                WriteLine("4- Excluir séries");
-                WriteLine("5- Visualizar séries");
-                WriteLine("C- Limpar tela");
-                WriteLine("R- Retornar");
-                WriteLine();
-
-                string opcaoUsuario = ReadLine().ToUpper();//indiferente do tipo A ou a
-                WriteLine();
-                return opcaoUsuario;
-            }
-
         }
         private static void OpcaoFilme()
         {
             {
-                string opcaoUsuario = ObterOpcaoUsuario();
+                string opcaoUsuario = OpcoesDoUsuario.ObterOpcaoUsuarioFilmes();
 
                 while (opcaoUsuario.ToUpper() != "X")
                 {
@@ -233,13 +198,12 @@ namespace dio.SERIES
                         case "C":
                             Console.Clear();
                             break;
-
                         default:
+                            WriteLine("OPÇÃO INVALIDA");
                             throw new ArgumentOutOfRangeException();
-
                     }
 
-                    opcaoUsuario = ObterOpcaoUsuario();
+                    opcaoUsuario = OpcoesDoUsuario.ObterOpcaoUsuarioFilmes();
                 }
 
 
@@ -342,25 +306,7 @@ namespace dio.SERIES
                 }
 
 
-                static string ObterOpcaoUsuario()
-                {
-                    WriteLine();
-                    WriteLine("JR Filmes a seu dispo!!!");
-                    WriteLine("Informe a opção desejada");
 
-                    WriteLine("1- Listar filmes");
-                    WriteLine("2- Inserir novo filme");
-                    WriteLine("3- Atualizar filmes");
-                    WriteLine("4- Excluir séries");
-                    WriteLine("5- Visualizar séries");
-                    WriteLine("C- Limpar tela");
-                    WriteLine("X- Sair");
-                    WriteLine();
-
-                    string opcaoUsuario = ReadLine().ToUpper();//indiferente do tipo A ou a
-                    WriteLine();
-                    return opcaoUsuario;
-                }
 
             }
         }

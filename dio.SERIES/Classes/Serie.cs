@@ -1,8 +1,8 @@
 namespace dio.SERIES//namespace dio.SERIES.Classes para ser geral
 {
-    public class Filme : EntidadeBase
+    public class Serie : EntidadeBase
     {
-        public Filme(int id, Genero genero, string titulo, string descricao, int ano, float duracao)//metodo da referencia
+        public Serie(int id, Genero genero, string titulo, string descricao, int ano, float duracao)//metodo da referencia
         {
             this.Id = id;//herdado da entidado base..
             this.Genero = genero;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using dio.SERIES.Interfaces;//para poder organizar
 
 namespace dio.SERIES 
-// Repositorio para organização do codigo
+// Repositorio para organização do codigo e gera as funçoes
 {
-    public class FilmeRepositorio : IRepositorio<Filme>// Nesta classe iremor implementa a interface IRepositorio a Serie 
+    public class FilmeRepositorio : IRepositorio<Filme>// Nesta classe iremos implementar a interface IRepositorio a Serie 
     {//
         private List<Filme> listaFilme = new List<Filme>();// criada a lista nesta classe para organizar
         public void Atualiza(int id, Filme objeto)//onde era o 'T' agora é 'Serie'
